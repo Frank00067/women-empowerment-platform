@@ -2,7 +2,6 @@
 
 Digital learning and career development platform to empower young African women with essential digital skills (Microsoft Word, Excel, digital literacy), CV/resume preparation, and job‑readiness tools.
 
-**Live demo:** [Women Empowerment Platform](https://Frank00067.github.io/women-empowerment-platform/)
 
 This project is split into:
 - **server** – Node.js/Express TypeScript API (auth, courses, progress, certificates, resources)
