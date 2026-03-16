@@ -122,15 +122,5 @@ The frontend is configured in `vite.config.ts` to proxy `/api` calls to the back
 
 ---
 
-### 7. Deploying frontend to GitHub Pages (summary)
 
-- Repo: `https://github.com/Frank00067/women-empowerment-platform`
-- `client/vite.config.ts` uses `base: "/women-empowerment-platform/"`
-- GitHub Actions workflow (`.github/workflows/deploy-client.yml`) can build `client` and deploy `client/dist` to GitHub Pages.
-
-Public URL (once Pages is enabled and workflow succeeds):
-
-```text
-https://Frank00067.github.io/women-empowerment-platform/
-```
 
