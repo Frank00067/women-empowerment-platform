@@ -135,7 +135,7 @@ The frontend is configured in `vite.config.ts` to proxy `/api` calls to the back
 
 ---
 
-### 7. Deploying frontend to GitHub Pages (summary)
+### 7. Deploying frontend to GitHub Pages (step-by-step)
 
 This project has a **frontend** (`client`) and a **backend** (`server`).
 
