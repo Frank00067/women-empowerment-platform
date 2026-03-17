@@ -163,6 +163,15 @@ textarea {
   font: inherit;
 }
 
+select {
+  padding: 0.55rem 0.7rem;
+  border-radius: 0.5rem;
+  border: 1px solid rgba(148, 163, 184, 0.6);
+  background: #020617;
+  color: inherit;
+  font: inherit;
+}
+
 textarea {
   min-height: 80px;
   resize: vertical;

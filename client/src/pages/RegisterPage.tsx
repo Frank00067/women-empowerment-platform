@@ -8,6 +8,7 @@ const RegisterPage = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [asAdmin, setAsAdmin] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
@@ -16,8 +17,8 @@ const RegisterPage = () => {
     setError(null);
     setLoading(true);
     try {
-      await register({ name, email, password });
-      navigate("/learner", { replace: true });
+      await register({ name, email, password, role: asAdmin ? "admin" : "learner" });
+      navigate(asAdmin ? "/admin" : "/learner", { replace: true });
     } catch (err: any) {
       setError(err?.response?.data?.message || "Unable to register");
     } finally {
@@ -58,6 +59,14 @@ const RegisterPage = () => {
             required
             minLength={6}
           />
+        </label>
+        <label>
+          <input
+            type="checkbox"
+            checked={asAdmin}
+            onChange={(e) => setAsAdmin(e.target.checked)}
+          />{" "}
+          Register as admin (demo)
         </label>
         <button type="submit" className="primary-btn" disabled={loading}>
           {loading ? "Creating account..." : "Sign up"}

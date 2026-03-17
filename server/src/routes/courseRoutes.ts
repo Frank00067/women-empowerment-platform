@@ -15,9 +15,12 @@ const validate = (req: any, res: any, next: any) => {
   next();
 };
 
-router.get("/", requireAuth, (_req, res) => {
+router.get("/", requireAuth, (req: AuthRequest, res) => {
+  if (req.user?.role === "admin") {
+    return res.json(courses);
+  }
   const publicCourses = courses.filter((c) => c.isPublished);
-  res.json(publicCourses);
+  return res.json(publicCourses);
 });
 
 router.get("/:courseId", requireAuth, (req, res) => {

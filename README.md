@@ -43,9 +43,21 @@ The API will start at `http://localhost:4000`.
 ```env
 JWT_SECRET=super-secret-key
 PORT=4000
+SEED_DATA=true
+DEFAULT_ADMIN_EMAIL=admin@demo.com
+DEFAULT_ADMIN_PASSWORD=password123
 ```
 
 You can change `JWT_SECRET` and `PORT` as needed.
+
+#### Default admin (local dev)
+
+When `SEED_DATA=true`, the server will automatically create an admin user (only if no admin exists yet):
+
+- **Email**: `admin@demo.com`
+- **Password**: `password123`
+
+Log in from the frontend at `http://localhost:5173/login`, then open the admin dashboard at `http://localhost:5173/admin`.
 
 ---
 
@@ -125,13 +137,117 @@ The frontend is configured in `vite.config.ts` to proxy `/api` calls to the back
 
 ### 7. Deploying frontend to GitHub Pages (summary)
 
-- Repo: `https://github.com/Frank00067/women-empowerment-platform`
-- `client/vite.config.ts` uses `base: "/women-empowerment-platform/"`
-- GitHub Actions workflow (`.github/workflows/deploy-client.yml`) can build `client` and deploy `client/dist` to GitHub Pages.
+This project has a **frontend** (`client`) and a **backend** (`server`).
+
+- **GitHub Pages deploys only the frontend** (static files).
+- The backend must be hosted elsewhere (Render/Railway/VPS) if you want the deployed site to have login, courses, admin tools, etc.
+
+#### Step A — Push your code to GitHub
+
+In the project root:
+
+```bash
+git init
+git add .
+git commit -m "Initial commit"
+git branch -M main
+git remote add origin https://github.com/Frank00067/women-empowerment-platform.git
+git push -u origin main
+```
+
+#### Step B — Set Vite base path (required for GitHub Pages)
+
+In `client/vite.config.ts` make sure you have:
+
+```ts
+base: "/women-empowerment-platform/"
+```
+
+#### Step C — Add GitHub Actions deploy workflow
+
+Create this file in your repo:
+
+`/.github/workflows/deploy-client.yml`
+
+```yaml
+name: Deploy client to GitHub Pages
+
+on:
+  push:
+    branches: [ main ]
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install and build client
+        working-directory: client
+        run: |
+          npm install
+          npm run build
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: client/dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+```
+
+Commit and push:
+
+```bash
+git add .github/workflows/deploy-client.yml client/vite.config.ts
+git commit -m "Deploy client to GitHub Pages"
+git push
+```
+
+#### Step D — Enable Pages
+
+In GitHub:
+
+- Repo → **Settings** → **Pages**
+- **Build and deployment** → Source: **GitHub Actions**
+
+#### Step E — Check Actions and open your site
+
+- Repo → **Actions** → wait for “Deploy client to GitHub Pages” to turn green.
+- Your site will be available at:
 
 Public URL (once Pages is enabled and workflow succeeds):
 
 ```text
 https://Frank00067.github.io/women-empowerment-platform/
 ```
+
+#### Common issue (important)
+
+On GitHub Pages, your frontend cannot call `http://localhost:4000` (that only works on your computer).
+
+If you want login/courses/admin tools to work on the live site, deploy the backend to a public host and then update the frontend to use that API base URL.
 
