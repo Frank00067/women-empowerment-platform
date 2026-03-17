@@ -65,6 +65,55 @@ a {
   margin: 0 auto;
 }
 
+.app-footer {
+  border-top: 1px solid rgba(148, 163, 184, 0.25);
+  background: radial-gradient(circle at bottom left, #1e293b, #020617);
+  padding: 1.5rem;
+}
+
+.footer-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1.3fr 1fr;
+  gap: 1.5rem;
+}
+
+.footer-muted {
+  color: #cbd5f5;
+  opacity: 0.9;
+  font-size: 0.9rem;
+}
+
+.footer-links {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.footer-title {
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.footer-links a {
+  display: block;
+  padding-block: 0.25rem;
+  opacity: 0.9;
+}
+
+.footer-bottom {
+  max-width: 1100px;
+  margin: 1.25rem auto 0;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(148, 163, 184, 0.2);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 1.25rem;
+  justify-content: space-between;
+  font-size: 0.9rem;
+}
+
 .landing {
   display: grid;
   gap: 2rem;
@@ -321,6 +370,14 @@ textarea {
 
   .app-main {
     padding-inline: 1rem;
+  }
+
+  .app-footer {
+    padding-inline: 1rem;
+  }
+
+  .footer-inner {
+    grid-template-columns: 1fr;
   }
 
   .cv-builder .cv-grid {

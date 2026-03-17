@@ -14,6 +14,7 @@ import CertificatesPage from "./pages/CertificatesPage";
 import JobsPage from "./pages/JobsPage";
 import NotificationsPage from "./pages/NotificationsPage";
 import ProtectedRoute from "./components/ProtectedRoute";
+import Footer from "./components/Footer";
 
 function App() {
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -119,6 +120,7 @@ function App() {
             <Route path="*" element={<Navigate to="/" />} />
           </Routes>
         </main>
+        <Footer />
       </div>
     </AuthContextProvider>
   );
