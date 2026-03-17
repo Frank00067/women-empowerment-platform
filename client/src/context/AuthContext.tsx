@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import axios from "axios";
 
-type UserRole = "learner" | "admin";
+type UserRole = "learner" | "admin" | "employer";
 
 interface User {
   id: string;

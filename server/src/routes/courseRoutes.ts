@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { body, validationResult } from "express-validator";
 import { requireAuth, requireRole, AuthRequest } from "../middleware/authMiddleware";
-import { courses, progresses, certificates } from "../store";
+import { courses, progresses, certificates, notifications } from "../store";
 import { Course, Lesson } from "../models";
 import { v4 as uuid } from "uuid";
 
@@ -156,6 +156,16 @@ router.post(
           )}`,
         });
       }
+
+      notifications.push({
+        id: uuid(),
+        userId: req.user!.id,
+        type: "course_completed",
+        title: "Course completed",
+        body: `You completed: ${course.title}. Your certificate is ready.`,
+        createdAt: new Date(),
+        link: "/certificates",
+      });
     }
 
     res.json(progress);

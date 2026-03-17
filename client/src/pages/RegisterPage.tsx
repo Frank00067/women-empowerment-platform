@@ -8,7 +8,9 @@ const RegisterPage = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [asAdmin, setAsAdmin] = useState(false);
+  const [accountType, setAccountType] = useState<"learner" | "admin" | "employer">(
+    "learner"
+  );
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
@@ -17,8 +19,15 @@ const RegisterPage = () => {
     setError(null);
     setLoading(true);
     try {
-      await register({ name, email, password, role: asAdmin ? "admin" : "learner" });
-      navigate(asAdmin ? "/admin" : "/learner", { replace: true });
+      await register({ name, email, password, role: accountType });
+      navigate(
+        accountType === "admin"
+          ? "/admin"
+          : accountType === "employer"
+            ? "/employer"
+            : "/learner",
+        { replace: true }
+      );
     } catch (err: any) {
       setError(err?.response?.data?.message || "Unable to register");
     } finally {
@@ -61,12 +70,17 @@ const RegisterPage = () => {
           />
         </label>
         <label>
-          <input
-            type="checkbox"
-            checked={asAdmin}
-            onChange={(e) => setAsAdmin(e.target.checked)}
-          />{" "}
-          Register as admin (demo)
+          Account type
+          <select
+            value={accountType}
+            onChange={(e) =>
+              setAccountType(e.target.value as "learner" | "admin" | "employer")
+            }
+          >
+            <option value="learner">learner</option>
+            <option value="employer">employer</option>
+            <option value="admin">admin (demo)</option>
+          </select>
         </label>
         <button type="submit" className="primary-btn" disabled={loading}>
           {loading ? "Creating account..." : "Sign up"}

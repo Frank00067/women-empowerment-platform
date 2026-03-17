@@ -21,7 +21,7 @@ router.post(
   body("name").isString().isLength({ min: 2 }),
   body("email").isEmail(),
   body("password").isLength({ min: 6 }),
-  body("role").optional().isIn(["learner", "admin"]),
+  body("role").optional().isIn(["learner", "admin", "employer"]),
   validate,
   async (req, res) => {
     const { name, email, password, role } = req.body as {

@@ -4,10 +4,11 @@ import { useAuth } from "../context/AuthContext";
 
 interface Props {
   children: ReactNode;
-  role?: "learner" | "admin";
+  role?: "learner" | "admin" | "employer";
+  roles?: Array<"learner" | "admin" | "employer">;
 }
 
-const ProtectedRoute = ({ children, role }: Props) => {
+const ProtectedRoute = ({ children, role, roles }: Props) => {
   const { user } = useAuth();
   const location = useLocation();
 
@@ -16,6 +17,10 @@ const ProtectedRoute = ({ children, role }: Props) => {
   }
 
   if (role && user.role !== role) {
+    return <Navigate to="/" replace />;
+  }
+
+  if (roles && roles.length > 0 && !roles.includes(user.role as any)) {
     return <Navigate to="/" replace />;
   }
 

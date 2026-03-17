@@ -87,13 +87,18 @@ The frontend is configured in `vite.config.ts` to proxy `/api` calls to the back
 
 - **Authentication**
   - Email/password registration and login
-  - JWT‑based auth with role support: `learner` and `admin`
+  - JWT‑based auth with role support: `learner`, `employer`, and `admin`
 - **Digital skills modules**
   - Courses for Word, Excel, digital skills, and career topics
   - Admin can create/update/delete courses and lessons (via API)
   - Learner progress tracking and automatic completion detection
 - **Career tools**
   - CV/Resume builder with guided fields and live preview
+- **Jobs (job posting + applications)**
+  - Employers can post jobs and review applications
+  - Learners can browse jobs and apply
+- **Notifications**
+  - In‑app notifications for new jobs, applications, and course completion
 - **Dashboards**
   - Learner dashboard: course progress and earned certificates
   - Admin dashboard: users, courses, certificates stats
@@ -128,10 +133,17 @@ The frontend is configured in `vite.config.ts` to proxy `/api` calls to the back
 3. In the browser:
    - Open `http://localhost:5173`
    - Click **Get Started** → **Register** to create a learner account
-   - Log in to access learner dashboard, courses, CV builder, mentorship and certificates
+   - Choose an **Account type**:
+     - learner → `/learner`
+     - employer → `/employer` (post jobs + view applications)
+     - admin → `/admin` (manage courses + resources)
+   - Visit:
+     - Jobs: `http://localhost:5173/jobs`
+     - Notifications: `http://localhost:5173/notifications`
 4. (Optional) Use Postman/HTTP client as an admin to:
    - Create courses via `POST /api/courses`
    - Add mentorship resources via `POST /api/resources`
+    - Post jobs via `POST /api/jobs`
 
 ---
 

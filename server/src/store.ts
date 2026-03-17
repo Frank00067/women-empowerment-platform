@@ -1,4 +1,13 @@
-import { User, Course, Progress, Certificate, Resource } from "./models";
+import {
+  User,
+  Course,
+  Progress,
+  Certificate,
+  Resource,
+  Job,
+  JobApplication,
+  Notification,
+} from "./models";
 import { v4 as uuid } from "uuid";
 import bcrypt from "bcryptjs";
 
@@ -10,6 +19,9 @@ export const courses: Course[] = [];
 export const progresses: Progress[] = [];
 export const certificates: Certificate[] = [];
 export const resources: Resource[] = [];
+export const jobs: Job[] = [];
+export const applications: JobApplication[] = [];
+export const notifications: Notification[] = [];
 
 export function seedData() {
   const shouldSeed = (process.env.SEED_DATA || "true").toLowerCase() === "true";
@@ -18,6 +30,7 @@ export function seedData() {
   createDefaultAdmin();
   createStarterCourses();
   createStarterResources();
+  createStarterJobs();
 }
 
 export function createDefaultAdmin() {
@@ -174,6 +187,44 @@ function createStarterResources() {
       description:
         "Explore Excel help topics and try small spreadsheet projects for practice.",
       mentorship: false,
+    }
+  );
+}
+
+function createStarterJobs() {
+  if (jobs.length > 0) return;
+
+  const employer = users.find((u) => u.role === "employer");
+  const createdBy = employer?.id || uuid();
+
+  jobs.push(
+    {
+      id: uuid(),
+      title: "Junior Admin Assistant",
+      companyName: "Kigali Growth Hub",
+      location: "Kigali (Hybrid)",
+      employmentType: "full-time",
+      description:
+        "Support daily office operations, document formatting, scheduling, and basic reporting in Excel.",
+      requirements:
+        "- Strong Microsoft Word skills\n- Basic Excel knowledge\n- Good communication\n- Attention to detail",
+      createdBy,
+      createdAt: new Date(),
+      isActive: true,
+    },
+    {
+      id: uuid(),
+      title: "Data Entry Intern (Excel)",
+      companyName: "WomenWorks Africa",
+      location: "Remote",
+      employmentType: "internship",
+      description:
+        "Assist with data cleaning, spreadsheet updates, and simple charts. Great for learners building confidence in Excel.",
+      requirements:
+        "- Comfortable with spreadsheets\n- Reliable internet\n- Willingness to learn",
+      createdBy,
+      createdAt: new Date(),
+      isActive: true,
     }
   );
 }

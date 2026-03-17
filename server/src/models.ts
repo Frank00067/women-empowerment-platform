@@ -1,4 +1,4 @@
-export type UserRole = "learner" | "admin";
+export type UserRole = "learner" | "admin" | "employer";
 
 export interface User {
   id: string;
@@ -49,5 +49,43 @@ export interface Resource {
   url: string;
   description?: string;
   mentorship?: boolean;
+}
+
+export interface Job {
+  id: string;
+  title: string;
+  companyName: string;
+  location: string;
+  employmentType: "full-time" | "part-time" | "internship" | "contract";
+  description: string;
+  requirements: string;
+  createdBy: string; // employer userId
+  createdAt: Date;
+  isActive: boolean;
+}
+
+export interface JobApplication {
+  id: string;
+  jobId: string;
+  userId: string; // learner userId
+  message?: string;
+  createdAt: Date;
+}
+
+export type NotificationType =
+  | "job_posted"
+  | "job_applied"
+  | "course_completed"
+  | "general";
+
+export interface Notification {
+  id: string;
+  userId: string;
+  type: NotificationType;
+  title: string;
+  body: string;
+  createdAt: Date;
+  readAt?: Date;
+  link?: string;
 }
 
